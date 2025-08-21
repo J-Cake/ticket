@@ -15,6 +15,8 @@ pub struct Config {
 #[derive(Serialize, Deserialize)]
 pub struct Server {
     pub listen: SocketAddr,
+    pub database: String,
+    pub redis: String
 }
 
 #[derive(Serialize, Deserialize)]

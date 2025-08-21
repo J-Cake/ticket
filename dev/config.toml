@@ -1,0 +1,11 @@
+[server]
+listen = "0.0.0.0:2560"
+redis = "redis://localhost/"
+database = "postgres://ticket:admin@localhost/ticket"
+
+[auth]
+jwks_url = "http://localhost:8080/realms/test/protocol/openid-connect/certs"
+issuer = "http://localhost:8080/realms/test"
+audience = "account" # us
+max_certificate_age = 3600
+token_ttl = 3600

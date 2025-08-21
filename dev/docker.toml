@@ -1,6 +1,9 @@
+# A configuration file which works in the [docker-compose](./docker-compose.yml) environment.
+
 [server]
 listen = "0.0.0.0:2560"
-redis_url = "redis://redis/"
+redis = "redis://redis/"
+database = "postgres://ticket@postgres:5678/ticket"
 
 [auth]
 jwks_url = "http://keycloak:8080/realms/test/protocol/openid-connect/certs"

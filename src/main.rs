@@ -19,14 +19,18 @@ pub async fn main() -> std::io::Result<()> {
 
     let http = web::Data::new(reqwest::Client::new());
 
-    let jwk = jwk::get(http.clone(), config.clone()).await?;
+    let jwk = web::Data::new(jwk::get(http.clone(), config.clone()).await?);
+
+    let db = web::Data::new(sqlx::PgPool::connect(&config.server.database).await
+        .expect("Failed to connect to database"));
 
     let _config = config.clone();
     actix_web::HttpServer::new(move || {
         actix_web::App::new()
-            .app_data(web::Data::new(_config.clone()))
-            .app_data(web::Data::new(http.clone()))
-            .app_data(web::Data::new(jwk.clone()))
+            .app_data(_config.clone())
+            .app_data(http.clone())
+            .app_data(jwk.clone())
+            .app_data(db.clone())
             .wrap(actix_web::middleware::from_fn(authenticate_middleware))
     })
     .bind(config.server.listen)?
