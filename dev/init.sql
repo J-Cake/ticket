@@ -1,0 +1,7 @@
+CREATE USER keycloak WITH PASSWORD 'admin';
+CREATE DATABASE keycloak OWNER keycloak;
+GRANT ALL PRIVILEGES ON DATABASE keycloak TO keycloak;
+
+CREATE USER ticket WITH PASSWORD 'admin';
+CREATE DATABASE ticket OWNER ticket;
+GRANT ALL PRIVILEGES ON DATABASE ticket TO ticket;

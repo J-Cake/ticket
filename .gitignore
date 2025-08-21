@@ -1,0 +1,4 @@
+/target
+/dev/test/authenticate.http
+/dev/test/http-client.env.json
+*lock*

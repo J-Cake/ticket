@@ -1,0 +1,10 @@
+[server]
+listen = "0.0.0.0:2560"
+redis_url = "redis://redis/"
+
+[auth]
+jwks_url = "http://keycloak:8080/realms/test/protocol/openid-connect/certs"
+issuer = "http://keycloak:8080/realms/test"
+audience = "account" # us
+max_certificate_age = 3600
+token_ttl = 3600

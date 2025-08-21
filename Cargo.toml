@@ -1,0 +1,21 @@
+[package]
+name = "ticket"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "ticket"
+path = "src/main.rs"
+
+[dependencies]
+actix-web = "4.11.0"
+env_logger = "0.11.8"
+log = "0.4.27"
+reqwest = { version = "0.12.23", features = ["json"] }
+serde = { version = "1.0.219", features = ["derive"] }
+toml = "0.9.5"
+clap = { version = "4.5.45", features = ["derive"] }
+tokio = { version = "1.47.1", features = ["fs"] }
+serde_json = "1.0.143"
+redis = { version = "0.32.4", features = ["aio", "async-std-comp"] }
+jsonwebtoken = "9.3.1"
