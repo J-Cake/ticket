@@ -18,11 +18,7 @@ use jsonwebtoken::{
     Algorithm,
     jwk::PublicKeyUse
 };
-use redis::{
-    AsyncCommands,
-    SetExpiry,
-    SetOptions
-};
+use redis::{AsyncCommands, Client, SetExpiry, SetOptions};
 use crate::{
     oidc::RedisHandle,
     oidc::Token,
@@ -40,11 +36,28 @@ where
             .map_into_right_body());
     };
 
-    let Some(redis) = req.app_data::<RedisHandle>().cloned() else {
-        log::error!("Redis client not found in middleware");
+    let Some(config) = req.app_data::<web::Data<Config>>() else {
+        log::error!("Could not acquire configuration. Something's probably gone pretty badly wrong.");
         return Ok(req
             .into_response(HttpResponse::InternalServerError().finish())
             .map_into_right_body());
+    };
+
+    let redis = match req.app_data::<RedisHandle>().cloned() {
+        Some(redis) => redis,
+        None => {
+            let redis: RedisHandle = web::Data::new(tokio::sync::Mutex::new(
+                Client::open(config.server.redis.as_str())
+                    .expect("Failed to connect to Redis")
+                    .get_multiplexed_async_connection()
+                    .await
+                    .expect("Failed to open multiplexed connection to Redis"),
+            ));
+
+            req.extensions_mut().insert(redis.clone());
+
+            redis
+        }
     };
 
     let token = match header.to_str().map(ToOwned::to_owned) {
@@ -60,13 +73,6 @@ where
                 .into_response(HttpResponse::Unauthorized().finish())
                 .map_into_right_body());
         }
-    };
-
-    let Some(config) = req.app_data::<web::Data<Config>>() else {
-        log::error!("Could not acquire configuration. Something's probably gone pretty badly wrong.");
-        return Ok(req
-            .into_response(HttpResponse::InternalServerError().finish())
-            .map_into_right_body());
     };
 
     let mut redis = redis.lock().await;

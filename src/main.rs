@@ -7,6 +7,7 @@ pub mod config;
 pub mod auth;
 pub mod jwk;
 pub mod oidc;
+mod api;
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
@@ -32,6 +33,7 @@ pub async fn main() -> std::io::Result<()> {
             .app_data(jwk.clone())
             .app_data(db.clone())
             .wrap(actix_web::middleware::from_fn(authenticate_middleware))
+            .service(api::list_tickets)
     })
     .bind(config.server.listen)?
     .run()

@@ -19,5 +19,5 @@ tokio = { version = "1.47.1", features = ["fs"] }
 serde_json = "1.0.143"
 redis = { version = "0.32.4", features = ["aio", "async-std-comp"] }
 jsonwebtoken = "9.3.1"
-chrono = "0.4.41"
-sqlx = { version = "0.8.6", features = ["postgres", "runtime-tokio", "derive", "chrono", "json"] }
+chrono = { version = "0.4.41", features = ["serde"] }
+sqlx = { version = "0.8.6", features = ["postgres", "runtime-tokio", "derive", "chrono", "json", "macros"] }
