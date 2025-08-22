@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="mock:///Generic SQL Fragment (api.rs:616).sql" value="8f0a5288-20c0-446b-8850-6399b15a27e9" />
+    <file url="mock:///Generic SQL Fragment (api.rs:616).sql" value="8f0a5288-20c0-446b-8850-6399b15a27e9" />
+    <file url="mock:///Generic SQL Fragment (api.rs:616).sql" value="8f0a5288-20c0-446b-8850-6399b15a27e9" />
+    <file url="mock:///PostgreSQL Fragment (api.rs:616).sql" value="8f0a5288-20c0-446b-8850-6399b15a27e9" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/8f0a5288-20c0-446b-8850-6399b15a27e9/console.sql" value="8f0a5288-20c0-446b-8850-6399b15a27e9" />
+    <file url="file://$PROJECT_DIR$/dev/db-setup.sql" value="8f0a5288-20c0-446b-8850-6399b15a27e9" />
+    <file url="file://$PROJECT_DIR$/src/api.rs" value="8f0a5288-20c0-446b-8850-6399b15a27e9" />
+  </component>
+</project>

@@ -23,18 +23,19 @@ pub async fn list_tickets(user: web::ReqData<Token>, options: web::Query<ListTic
         .fetch_all(&**db)
         .await?;
 
-    log::debug!("{:?}", tickets);
+    // log::debug!("{:#?}", );
 
-    Ok(vec![])
-    // Ok(tickets.into_iter().map(|ticket| Ticket {
-    //     id: tickets.ticket_id,
-    //     title: tickets.title,
-    //     date: tickets.date,
-    //     registrant: tickets.registrant,
-    //     assignee: tickets.assignee,
-    //     priority: tickets.priority,
-    //     status: tickets.status,
-    // }).collect())
+    Ok(web::Json(tickets.into_iter()
+        .filter_map(|i| Some(Ticket {
+            ticket_id: i.ticket_id? as u64,
+            date: i.date?.and_utc(),
+            title: i.title?,
+            registrant: i.registrant? as UserID,
+            assignee: i.assignee.map(|i| i as UserID),
+            priority: i.priority?,
+            status: i.status?,
+        }))
+        .collect::<Vec<_>>()))
 }
 
 // #[post("/tickets")]
@@ -42,7 +43,7 @@ pub async fn list_tickets(user: web::ReqData<Token>, options: web::Query<ListTic
 //     Ok(())
 // }
 
-pub type UserID = String;
+pub type UserID = u64;
 
 #[derive(Default, Debug, Serialize, Deserialize)]
 pub enum TicketPriority {
@@ -82,7 +83,7 @@ impl sqlx::Decode<'_, Postgres> for TicketStatus {
     fn decode(value: <Postgres as Database>::ValueRef<'_>) -> Result<Self, BoxDynError> {
         match value.as_str()? {
             "new" => Ok(TicketStatus::New),
-            "in_progress" => Ok(TicketStatus::InProgress),
+            "in progress" => Ok(TicketStatus::InProgress),
             "done" => Ok(TicketStatus::Done),
             "cancelled" => Ok(TicketStatus::Cancelled),
             "wont_fix" => Ok(TicketStatus::WontFix),
@@ -119,11 +120,11 @@ pub struct TicketBuilder {
 
 #[derive(Serialize, Deserialize, sqlx::FromRow)]
 pub struct Ticket {
-    id: u64,
+    ticket_id: u64,
+    date: chrono::DateTime<chrono::Utc>,
     title: String,
     registrant: UserID,
     assignee: Option<UserID>,
-    date: chrono::DateTime<chrono::Utc>,
     priority: TicketPriority,
     status: TicketStatus,
 }
