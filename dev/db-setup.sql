@@ -14,7 +14,7 @@ create type priority as enum ('low', 'normal', 'high', 'critical');
 
 alter type priority owner to ticket;
 
-create type status as enum ('new', 'in progress', 'done', 'cancelled', 'wontfix', 'duplicate', 'stale', 'resolved');
+create type status as enum ('new', 'in progress', 'done', 'cancelled', 'wont fix', 'duplicate', 'stale', 'resolved');
 
 alter type status owner to ticket;
 
@@ -57,7 +57,7 @@ create table if not exists ticket_update
     registrant integer                              not null
         constraint registrant
             references users,
-    assignee   integer                              not null
+    assignee   integer
         constraint assignee
             references users
 );
@@ -129,9 +129,9 @@ $$
         date,
         date,
         title,
-        status,
         priority,
         registrant,
+        status,
         assignee;
 $$;
 
