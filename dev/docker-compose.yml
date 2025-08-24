@@ -1,14 +1,15 @@
+name: 'Ticket'
 
 services:
   ticket:
     build:
       context: ..
       dockerfile: "dev/ticket.dockerfile"
-
     container_name: "ticket"
     ports:
       - "2560:2560"
     volumes:
+      - ./target/debug/ticket:/usr/bin/ticket
       - ./docker.toml:/etc/ticket/docker.toml
     depends_on:
       - redis
@@ -16,6 +17,20 @@ services:
     environment:
       - RUST_LOG=ticket=trace,debug
     command: ["-c", "/etc/ticket/docker.toml"]
+    networks:
+      - ticket
+
+  public:
+    build:
+      context: ..
+      dockerfile: "dev/public.dockerfile"
+    container_name: "public"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ../app/build:/var/www/html
     networks:
       - ticket
 

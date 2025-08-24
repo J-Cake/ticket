@@ -1,0 +1,28 @@
+{
+    "name": "spreadsheet",
+    "build": "./build.js",
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "build": "node ./build.js",
+        "serve": "python -m http.server -d build"
+    },
+    "dependencies": {
+        "mousetrap": "^1.6.5",
+        "mousetrap-global-bind": "^1.1.0",
+        "react": "latest",
+        "react-dom": "latest"
+    },
+    "devDependencies": {
+        "@types/mousetrap": "^1.6.15",
+        "@types/node": "latest",
+        "@types/react": "latest",
+        "@types/react-dom": "latest",
+        "esbuild": "latest"
+    },
+    "deploy": {
+        "main": "run.js",
+        "imports": null,
+        "scripts": null
+    }
+}
