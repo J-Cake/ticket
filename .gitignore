@@ -1,4 +1,7 @@
-/target
 /dev/authenticate.http
 /dev/http-client.env.json
 *lock*
+
+**/node_modules
+**/build
+**/target

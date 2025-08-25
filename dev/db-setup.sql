@@ -18,14 +18,22 @@ create type status as enum ('new', 'in progress', 'done', 'cancelled', 'wont fix
 
 alter type status owner to ticket;
 
-create table if not exists users
+create table if not exists public.users
 (
     user_id      integer default nextval('user_nr'::regclass) not null
         constraint users_pk
             primary key,
     username     text                                         not null,
-    display_name text
+    display_name text,
+    sub          text                                         not null
+        constraint users_pk_2
+            unique
 );
+
+alter table public.users
+    owner to ticket;
+
+
 
 alter table users
     owner to ticket;

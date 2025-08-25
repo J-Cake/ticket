@@ -7,6 +7,8 @@
       <excludeFolder url="file://$MODULE_DIR$/dev/test" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/dev/priv" />
+      <excludeFolder url="file://$MODULE_DIR$/dev/app" />
+      <excludeFolder url="file://$MODULE_DIR$/dev/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

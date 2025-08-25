@@ -11,7 +11,8 @@
         "mousetrap": "^1.6.5",
         "mousetrap-global-bind": "^1.1.0",
         "react": "latest",
-        "react-dom": "latest"
+        "react-dom": "latest",
+        "keycloak-js": "^26.2.0"
     },
     "devDependencies": {
         "@types/mousetrap": "^1.6.15",

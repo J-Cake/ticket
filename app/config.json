@@ -1,0 +1,5 @@
+{
+	"clientId": "tickets",
+	"realm": "test",
+	"url": "http://localhost:8080/"
+}
